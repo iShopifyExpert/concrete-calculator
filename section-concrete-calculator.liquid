@@ -1,0 +1,167 @@
+<div class="conretecalculator">
+  <div class="section-heading"> 
+      <h1 class="sec-heading">Maxrete</h1>
+  </div>
+  <div class="grid grid--uniform">
+    <div class="calculations grid__item medium-up--one-third small--one-whole slide-up-animation animated">
+      <div class="inout-fields_cal">
+        <label class="placev" for="volume">cm</label>
+        <input class="length" type="number" placeholder="Length">
+        <span class="text-center">X</span>
+        <label class="placev" for="volume">cm</label>
+        <input class="width" type="number" placeholder="Width">
+        <span class="text-center">X</span>
+        <label class="placev" for="volume">cm</label>
+        <input class="height" type="number" placeholder="Height">
+        <span class="text-center">You need</span>
+      </div>
+      <div class="calresults">
+        <label class="placev" for="volume">Litres</label>
+        <input class="volume" type="text" placeholder="Volume" readonly disabled>
+      </div>
+      <div class="volinput">
+        <label class="text-center">Or enter your m3 below</label>
+        <label class="placev" for="volume">Litres</label>
+        <input class="volumein" type="number" placeholder="Volume">
+      </div>
+    </div>
+    <div class="grid__item medium-up--two-thirds small--one-whole slide-up-animation animated">
+      <div class="product grid__item medium-up--one-whole small--one-whole slide-up-animation animated">
+        {% for block in section.blocks %}
+         {%- assign product = all_products[block.settings.product] -%}
+         {%- assign current_variant = product.selected_or_first_available_variant -%}
+          {% include 'concrete-product-grid' %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  label.placev {
+    position: absolute;
+    margin-top: 20px;
+    right: 0;
+    margin-right: 10px;
+}
+  #concrete-calculator .product-single__title{
+    font-size: 1.2em;
+  }
+  #concrete-calculator .product-single__price {
+    font-size: 17px;
+  }
+  .calculations input {
+    outline: 0;
+    background: #fff;
+    border: solid 1px;
+    width: 100%;
+    padding: 10px 50px 10px 10px;
+    margin: 10px 0;
+  }
+  #concrete-calculator .product-single__cart-submit {
+    width: 100%;
+  }
+  #concrete-calculator .product-form {
+    margin-top: 1.2rem;
+  } 
+  .text-center{
+    margin: 0 auto;
+    text-align: center !important;
+    display: block;
+  } 
+  #concrete-calculator .product-single__photos img{
+    object-fit: contain;
+    width: 150%;
+    margin: 0px -50px;
+    z-index: -1;
+  }
+  #concrete-calculator button#AddToCart {
+    width: 100%;
+}
+  #concrete-calculator .shopify-payment-button__button {
+    width: 100% !important;
+}
+  h1.sec-heading {
+    text-align: center;
+    font-size: 50px;
+}
+.volinput {
+    padding-top: 30px;
+}
+#concrete-calculator input[disabled] {
+    cursor: default;
+    color: #000;
+    opacity: 1;
+}  
+  @media screen and (max-width:748px){
+    #concrete-calculator .product-single__photos img{
+    margin: 0px -85px;
+    }
+    #concrete-calculator .product-single .grid__item {
+      padding-left: 0px;
+    }   
+  }
+
+</style>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $(document).on('change input copy paste keyup', '.inout-fields_cal input[type="number"]', function() {
+      var length = $('.length').val();
+      var height = $('.height').val();
+      var width = $('.width').val();
+      var volumeincm = length * height * width;
+      var volumeinm =  Math.ceil(volumeincm / 1000);
+      $('.volume').val(volumeinm);
+      if (length.length && height.length && width.length){
+      $('[name="quantity"]').each(function(i, obj) {
+        var eachqty = $(this).data('litres');
+        var etotalqty =  Math.ceil(volumeinm / eachqty);
+        if(etotalqty < 1){
+         var etotalqtyround = 1;
+        } else {
+          var etotalqtyround = etotalqty;
+        }
+        $(this).val(etotalqtyround).attr('value', etotalqtyround);
+        var eprice = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
+        $(this).parents('.product-single__meta').find('.product-single__price').html(eprice + ' * ' + etotalqtyround + ' = ' + (eprice * etotalqtyround).toFixed(2) + ' {{shop.currency}}');
+      });
+      }
+     });
+     $(document).on('change input copy paste keyup', '.volumein', function() {
+       var volumeinput =  Math.ceil($(this).val());
+       $('.inout-fields_cal input[type="number"], .calresults input[type="text"]').val('');
+       $('[name="quantity"]').each(function(i, obj) {
+       var eachqtyv = $(this).data('litres');
+       var etotalqtyv =  Math.ceil(volumeinput / eachqtyv);
+        if(etotalqtyv < 1){
+         var etotalqtyroundv = 1;
+        } else {
+          var etotalqtyroundv = etotalqtyv;
+        }         
+       $(this).val(etotalqtyroundv).attr('value', etotalqtyroundv);
+       var epricev = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
+       $(this).parents('.product-single__meta').find('.product-single__price').html(epricev + ' * ' + etotalqtyroundv + ' = ' + (epricev * etotalqtyroundv).toFixed(2) + ' {{shop.currency}}');
+       });
+      });
+     });
+</script>
+{% schema %}
+{
+"name": "Concrete Calculator",
+"settings": [
+
+  ],
+  "blocks":[
+  {
+  "name": "product",
+  "type": "product",
+  "settings": [    
+    {
+    "type": "product",
+    "id": "product",
+    "label": "Product"
+    } 
+    ]
+  }
+  ]
+}
+{% endschema %}
