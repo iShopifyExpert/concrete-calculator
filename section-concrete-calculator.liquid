@@ -104,7 +104,7 @@
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
-     $(document).on('change input copy paste keyup', '.inout-fields_cal input[type="number"]', function() {
+    $(document).on('change input copy paste keyup', '.inout-fields_cal input[type="number"]', function() {
       var length = $('.length').val();
       var height = $('.height').val();
       var width = $('.width').val();
@@ -112,37 +112,37 @@
       var volumeinm =  Math.ceil(volumeincm / 1000);
       $('.volume').val(volumeinm);
       if (length.length && height.length && width.length){
-      $('[name="quantity"]').each(function(i, obj) {
-        var eachqty = $(this).data('litres');
-        var etotalqty =  Math.ceil(volumeinm / eachqty);
-        if(etotalqty < 1){
-         var etotalqtyround = 1;
-        } else {
-          var etotalqtyround = etotalqty;
-        }
-        $(this).val(etotalqtyround).attr('value', etotalqtyround);
-        var eprice = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
-        $(this).parents('.product-single__meta').find('.product-single__price').html(eprice + ' * ' + etotalqtyround + ' = ' + (eprice * etotalqtyround).toFixed(2) + ' {{shop.currency}}');
-      });
+        $('[name="quantity"]').each(function(i, obj) {
+          var eachqty = $(this).data('litres');
+          var etotalqty =  Math.ceil(volumeinm / eachqty);
+          if(etotalqty < 1){
+            var etotalqtyround = 1;
+          } else {
+            var etotalqtyround = etotalqty;
+          }
+          $(this).val(etotalqtyround).attr('value', etotalqtyround);
+          var eprice = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
+          $(this).parents('.product-single__meta').find('.product-single__price').html(eprice + ' * ' + etotalqtyround + ' = ' + (eprice * etotalqtyround).toFixed(2) + ' {{shop.currency}}');
+        });
       }
-     });
-     $(document).on('change input copy paste keyup', '.volumein', function() {
-       var volumeinput =  Math.ceil($(this).val());
-       $('.inout-fields_cal input[type="number"], .calresults input[type="text"]').val('');
-       $('[name="quantity"]').each(function(i, obj) {
-       var eachqtyv = $(this).data('litres');
-       var etotalqtyv =  Math.ceil(volumeinput / eachqtyv);
-        if(etotalqtyv < 1){
-         var etotalqtyroundv = 1;
-        } else {
-          var etotalqtyroundv = etotalqtyv;
-        }         
-       $(this).val(etotalqtyroundv).attr('value', etotalqtyroundv);
-       var epricev = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
-       $(this).parents('.product-single__meta').find('.product-single__price').html(epricev + ' * ' + etotalqtyroundv + ' = ' + (epricev * etotalqtyroundv).toFixed(2) + ' {{shop.currency}}');
-       });
+    });
+    $(document).on('change input copy paste keyup', '.volumein', function() {
+      var volumeinput =  Math.ceil($(this).val());
+      $('.inout-fields_cal input[type="number"], .calresults input[type="text"]').val('');
+      $('[name="quantity"]').each(function(i, obj) {
+         var eachqtyv = $(this).data('litres');
+         var etotalqtyv =  Math.ceil(volumeinput / eachqtyv);
+         if(etotalqtyv < 1){
+           var etotalqtyroundv = 1;
+         } else {
+           var etotalqtyroundv = etotalqtyv;
+         }         
+         $(this).val(etotalqtyroundv).attr('value', etotalqtyroundv);
+         var epricev = $(this).parents('.product-single__meta').find('.product-single__price').attr('content');
+         $(this).parents('.product-single__meta').find('.product-single__price').html(epricev + ' * ' + etotalqtyroundv + ' = ' + (epricev * etotalqtyroundv).toFixed(2) + ' {{shop.currency}}');
       });
-     });
+    });
+  });
 </script>
 {% schema %}
 {
