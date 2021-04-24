@@ -1,0 +1,82 @@
+{% section 'concrete-calculator' %}
+<style>
+  .section-container{
+    padding: 0 20px;
+    width:100%;
+    display:flex;
+    justify-content: center;
+  }
+  .section-container .calculations {
+    margin-bottom: 30px;
+  }
+  .section-container.block-1 {
+    padding-bottom: 48px;
+    border-bottom: 1px solid #ddd;
+  }
+  .section-container.block-2 {
+    padding-top: 48px;
+  }
+  label.placev {
+    display:inline-block;
+    margin-top: 20px;
+    margin-right: 10px;
+  }
+  .product-single__title{
+    font-size: 1.2em;
+  }
+  .product-single__price {
+    font-size: 17px;
+  }
+  .calculations input {
+    outline: 0;
+    background: #fff;
+    border: solid 1px;
+    width:80%;
+    padding: 10px 50px 10px 10px;
+    margin: 10px 0;
+  }
+  .product-single__cart-submit {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .product-form {
+    margin-top: 1.2rem;
+  } 
+  .text-center{
+    margin: 0 auto;
+    text-align: center !important;
+    display: block;
+  } 
+  .product-single__photos img{
+    object-fit: contain;
+    width: 150%;
+    /*margin: 0px -50px;*/
+    z-index: -1;
+  }
+  button#AddToCart {
+    width: 100%;
+  }
+  .shopify-payment-button__button {
+    width: 100% !important;
+  }
+  h1.sec-heading {
+    text-align: center;
+    font-size: 50px;
+  }
+  .volinput {
+    padding-top: 30px;
+  }
+  input[disabled] {
+    cursor: default;
+    color: #000;
+    opacity: 1;
+  }  
+  @media screen and (max-width:748px){
+    .product-single__photos img{
+      /*margin: 0px -85px;*/
+    }
+    .product-single .grid__item {
+      padding-left: 0px;
+    }   
+  }
+</style>
